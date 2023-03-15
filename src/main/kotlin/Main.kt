@@ -1,4 +1,4 @@
-package utils
+
 import controllers.NoteAPI
 import models.Note
 import mu.KotlinLogging
@@ -19,7 +19,7 @@ fun main(args: Array<String>) {
     runMenu()
 }
 fun mainMenu() : Int {
-    return ScannerInput.readNextInt(""" 
+    return readNextInt(""" 
          > ----------------------------------
          > |        NOTE KEEPER APP         |
          > ----------------------------------
