@@ -3,7 +3,7 @@ package controllers
 import models.Note
 
 
-class NoteAPI {
+class   NoteAPI {
     private var notes = ArrayList<Note>()
 
     fun add(note: Note): Boolean {
@@ -37,17 +37,8 @@ class NoteAPI {
         return (index >= 0 && index < list.size)
     }
 
-    fun numberOfArchivedNotes(): Int {
-        var counter = 0
-        for (note in notes) {
-            if (note.isNoteArchived) {
-                counter++
-            }
-        }
-        return counter
-    }
-
     fun numberOfActiveNotes(): Int {
+
         var counter = 0
         for (note in notes) {
             if (!note.isNoteArchived) {
@@ -57,18 +48,16 @@ class NoteAPI {
         return counter
     }
 
-    fun ListNotesArchived(): String {
-        return if (numberOfArchivedNotes() == 0) {
-            "No active notes stored"
-        } else {
-            var ArchivedNotes = ""
-            for (i in notes.indices) {
-                if (notes[i].isNoteArchived) {
-                    ArchivedNotes += "${i}: ${notes[i]} \n"
-                }
+
+// Archived Notes
+    fun numberOfArchivedNotes(): Int {
+        var counter = 0
+        for (note in notes) {
+            if (note.isNoteArchived) {
+                counter++
             }
-            ArchivedNotes
         }
+        return counter
     }
 
     fun listActiveNotes(): String {
@@ -84,6 +73,33 @@ class NoteAPI {
             listOfActiveNotes
         }
     }
+
+
+    fun listArchivedNotes(): String {
+        return if (numberOfArchivedNotes() == 0) {
+            "No archived notes stored"
+        } else {
+            var listOfArchivedNotes = ""
+            for (note in notes) {
+                if (note.isNoteArchived) {
+                    listOfArchivedNotes += "${notes.indexOf(note)}: $note \n"
+                }
+            }
+            listOfArchivedNotes
+        }
+    }
+
+    fun numberOfNotesByPriority(priority: Int): Int {
+        //helper method to determine how many notes there are of a specific priority
+        var counter = 0
+        for (note in notes) {
+            if (note.notePriority == priority) {
+                counter++
+            }
+        }
+        return counter
+    }
+
 
 }
 
