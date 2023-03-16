@@ -1,6 +1,7 @@
 
 import controllers.NoteAPI
 import models.Note
+
 import mu.KotlinLogging
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
@@ -41,8 +42,6 @@ fun runMenu() {
             2  -> listNotes()
             3  -> updateNote()
             4  -> deleteNote()
-            5  -> NoteAPI().listActiveNotes()
-            6  -> NoteAPI().ListNotesArchived()
             0  -> exitApp()
             else -> println("Invalid option entered: " + option)
         }
