@@ -41,6 +41,8 @@ fun runMenu() {
             2  -> listNotes()
             3  -> updateNote()
             4  -> deleteNote()
+            5  -> NoteAPI().listActiveNotes()
+            6  -> NoteAPI().ListNotesArchived()
             0  -> exitApp()
             else -> println("Invalid option entered: " + option)
         }
@@ -67,17 +69,17 @@ fun listNotes(){
 }
 
 fun updateNote(){
-    println("You chose Update Note")
+
     logger.info { "updateNote() function invoked" }
 }
 
 fun deleteNote(){
-    println("You chose Delete Note")
+
     logger.info { "delete() function invoked" }
 }
 
 fun exitApp(){
-    println("Exiting...bye")
+
     logger.info { "exitApp() function invoked" }
     exit(0)
 

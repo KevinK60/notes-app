@@ -1,12 +1,14 @@
 package controllers
 
 import models.Note
+import controllers.NoteAPI
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFalse
 
 class NoteAPITest {
 
@@ -19,7 +21,7 @@ class NoteAPITest {
     private var emptyNotes: NoteAPI? = NoteAPI()
 
     @BeforeEach
-    fun setup(){
+    fun setup() {
         learnKotlin = Note("Learning Kotlin", 5, "College", false)
         summerHoliday = Note("Summer Holiday to France", 1, "Holiday", false)
         codeApp = Note("Code App", 4, "Work", false)
@@ -35,7 +37,7 @@ class NoteAPITest {
     }
 
     @AfterEach
-    fun tearDown(){
+    fun tearDown() {
         learnKotlin = null
         summerHoliday = null
         codeApp = null
@@ -85,6 +87,21 @@ class NoteAPITest {
             assertTrue(notesString.contains("swim"))
             assertTrue(notesString.contains("summer holiday"))
         }
+
     }
 
+    @Nested
+    inner class NoteStates{
+
+    @Test
+    fun `numberOfArchivedNotes returns 0 when no notes are archived`() {
+        assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
+
+    }
+    @Test
+    fun `listActiveNotes returns 0 when no notes are actives`() {
+        assertEquals(5, populatedNotes!!.numberOfActiveNotes())
+
+    }
+    }
 }

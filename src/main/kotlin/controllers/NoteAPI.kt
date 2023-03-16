@@ -5,9 +5,11 @@ import models.Note
 
 class NoteAPI {
     private var notes = ArrayList<Note>()
+
     fun add(note: Note): Boolean {
         return notes.add(note)
     }
+
     fun listAllNotes(): String {
         return if (notes.isEmpty()) {
             "No notes stored"
@@ -19,6 +21,7 @@ class NoteAPI {
             listOfNotes
         }
     }
+
     fun numberOfNotes(): Int {
         return notes.size
     }
@@ -34,6 +37,55 @@ class NoteAPI {
         return (index >= 0 && index < list.size)
     }
 
+    fun numberOfArchivedNotes(): Int {
+        var counter = 0
+        for (note in notes) {
+            if (note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
+    }
 
+    fun numberOfActiveNotes(): Int {
+        var counter = 0
+        for (note in notes) {
+            if (!note.isNoteArchived) {
+                counter++
+            }
+        }
+        return counter
+    }
+
+    fun ListNotesArchived(): String {
+        return if (numberOfArchivedNotes() == 0) {
+            "No active notes stored"
+        } else {
+            var ArchivedNotes = ""
+            for (i in notes.indices) {
+                if (notes[i].isNoteArchived) {
+                    ArchivedNotes += "${i}: ${notes[i]} \n"
+                }
+            }
+            ArchivedNotes
+        }
+    }
+
+    fun listActiveNotes(): String {
+        return if (numberOfActiveNotes() == 0) {
+            "No active notes stored"
+        } else {
+            var listOfActiveNotes = ""
+            for (note in notes) {
+                if (!note.isNoteArchived) {
+                    listOfActiveNotes += "${notes.indexOf(note)}: $note \n"
+                }
+            }
+            listOfActiveNotes
+        }
+    }
 
 }
+
+
+
