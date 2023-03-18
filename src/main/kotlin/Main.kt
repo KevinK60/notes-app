@@ -45,7 +45,7 @@ fun runMenu() {
         val option = mainMenu()
         when (option) {
             1  -> addNote()
-            2  -> listNotes()
+            2  -> listnotes()
             3  -> updateNote()
             4  -> deleteNote()
             0  -> exitApp()
@@ -88,11 +88,31 @@ fun addNote(){
         println("Add Failed")
     }
 }
-
-
 fun listNotes(){
     println(noteAPI.listAllNotes())
 
+}
+
+fun listnotes(){
+    if (noteAPI.numberOfNotes() >= 0) {
+        val option = readNextInt(
+            """
+                  > --------------------------------
+                  > |   1) View ALL notes          |
+                  > |   2) View ARCHIVED       |
+                  > |   3) View ACTIVE notes     |
+                  > --------------------------------
+         > ==>> """.trimMargin(">"))
+
+        when (option) {
+            1 -> listNotes();
+            2 -> noteAPI.listActiveNotes()
+            3 -> noteAPI.listActiveNotes()
+            else -> println("Invalid option entered: " + option);
+        }
+    } else {
+        println("Option Invalid - No notes stored");
+    }
 }
 
 fun updateNote() {
