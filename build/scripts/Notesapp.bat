@@ -67,7 +67,7 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Notesapp-1.0-SNAPSHOT.jar;%APP_HOME%\lib\kotlin-logging-jvm-2.1.23.jar;%APP_HOME%\lib\kotlin-stdlib-jdk8-1.7.21.jar;%APP_HOME%\lib\slf4j-simple-1.7.36.jar;%APP_HOME%\lib\kotlin-stdlib-jdk7-1.7.21.jar;%APP_HOME%\lib\kotlin-stdlib-1.7.21.jar;%APP_HOME%\lib\slf4j-api-1.7.36.jar;%APP_HOME%\lib\kotlin-stdlib-common-1.7.21.jar;%APP_HOME%\lib\annotations-13.0.jar
+set CLASSPATH=%APP_HOME%\lib\Notesapp-1.0-SNAPSHOT.jar;%APP_HOME%\lib\kotlin-logging-jvm-2.1.23.jar;%APP_HOME%\lib\kotlin-stdlib-jdk8-1.7.21.jar;%APP_HOME%\lib\slf4j-simple-1.7.36.jar;%APP_HOME%\lib\xstream-1.4.18.jar;%APP_HOME%\lib\jettison-1.4.1.jar;%APP_HOME%\lib\kotlin-stdlib-jdk7-1.7.21.jar;%APP_HOME%\lib\kotlin-stdlib-1.7.21.jar;%APP_HOME%\lib\slf4j-api-1.7.36.jar;%APP_HOME%\lib\mxparser-1.2.2.jar;%APP_HOME%\lib\kotlin-stdlib-common-1.7.21.jar;%APP_HOME%\lib\annotations-13.0.jar;%APP_HOME%\lib\xmlpull-1.1.3.1.jar
 
 
 @rem Execute Notesapp
