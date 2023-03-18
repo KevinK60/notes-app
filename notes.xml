@@ -1,0 +1,10 @@
+<object-stream>
+  <list>
+    <models.Note>
+      <noteTitle>2</noteTitle>
+      <notePriority>2</notePriority>
+      <noteCategory>2</noteCategory>
+      <isNoteArchived>false</isNoteArchived>
+    </models.Note>
+  </list>
+</object-stream>
