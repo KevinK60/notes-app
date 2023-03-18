@@ -6,6 +6,7 @@ import mu.KotlinLogging
 import persistence.JSONSerializer
 import utils.ScannerInput.readNextInt
 import utils.ScannerInput.readNextLine
+import java.awt.SystemTray
 import java.io.File
 import java.lang.System.exit
 import java.util.*
@@ -18,7 +19,7 @@ fun main(args: Array<String>) {
     println("Hello World!")
 
 
-
+    NoteAPI.listArchivedNotes()
     runMenu()
 }
 fun mainMenu() : Int {
@@ -31,6 +32,9 @@ fun mainMenu() : Int {
          > |   2) List all notes            |
          > |   3) Update a note             |
          > |   4) Delete a note             |
+         > 5) Archive a note
+         > 20) Save notes                  |
+         > 21) Load notes                  |
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -45,12 +49,32 @@ fun runMenu() {
             3  -> updateNote()
             4  -> deleteNote()
             0  -> exitApp()
+            5 -> archiveNote()
             20 -> save()
             21 -> load()
             else -> println("Invalid option entered: " + option)
         }
     } while (true)
 }
+
+
+fun archiveNote()
+{
+    print(noteAPI.listActiveNotes())
+    if (noteAPI.numberOfActiveNotes() > 0) {
+
+        val indexToArchive = readNextInt("Enter the index of the note to archive: ")
+
+
+        if (noteAPI.archiveNote(indexToArchive)) {
+            val noteToArchive = noteAPI.archiveNote(indexToArchive)
+            println("Archive Successful! " + noteToArchive)
+        } else {
+            println("Archive NOT Successful")
+        }
+    }
+}
+
 fun addNote(){
 
     val noteTitle = readNextLine("Enter a title for the note: ")
@@ -113,6 +137,7 @@ fun deleteNote(){
 fun save() {
     try {
         noteAPI.store()
+        print("saved Successfully")
     } catch (e: Exception) {
         System.err.println("Error writing to file: $e")
     }
@@ -121,6 +146,7 @@ fun save() {
 fun load() {
     try {
         noteAPI.load()
+        print("Loaded Successfully")
     } catch (e: Exception) {
         System.err.println("Error reading from file: $e")
     }
