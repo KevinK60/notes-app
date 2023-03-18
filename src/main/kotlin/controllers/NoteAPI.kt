@@ -52,6 +52,16 @@ class NoteAPI(serializerType: Serializer) {
         return counter
     }
 
+    fun archiveNote(indexToArchive: Int): Boolean {
+        if (isValidIndex(indexToArchive)) {
+            val noteToArchive = notes[indexToArchive]
+            if (!noteToArchive.isNoteArchived) {
+                noteToArchive.isNoteArchived = true
+                return true
+            }
+        }
+        return false
+    }
 
     // Archived Notes
     fun numberOfArchivedNotes(): Int {
@@ -157,6 +167,12 @@ class NoteAPI(serializerType: Serializer) {
 
     fun isValidIndex(Index: Int): Boolean {
         return isValidListIndex(Index, notes);
+    }
+
+    companion object {
+        fun listArchivedNotes() {
+
+        }
     }
 
 
