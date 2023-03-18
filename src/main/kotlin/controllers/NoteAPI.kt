@@ -4,7 +4,7 @@ import models.Note
 import persistence.Serializer
 
 
-class NoteAPI(serializerType: Serializer){
+class NoteAPI(serializerType: Serializer) {
 
     private var serializer: Serializer = serializerType
 
@@ -53,7 +53,7 @@ class NoteAPI(serializerType: Serializer){
     }
 
 
-// Archived Notes
+    // Archived Notes
     fun numberOfArchivedNotes(): Int {
         var counter = 0
         for (note in notes) {
@@ -123,11 +123,13 @@ class NoteAPI(serializerType: Serializer){
             }
         }
     }
+
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {
             notes.removeAt(indexToDelete)
         } else null
     }
+
     @Throws(Exception::class)
     fun load() {
         notes = serializer.read() as ArrayList<Note>
@@ -137,7 +139,31 @@ class NoteAPI(serializerType: Serializer){
     fun store() {
         serializer.write(notes)
     }
+        fun updateNote(indexToUpdate: Int, note: Note?): Boolean {
+            //find the note object by the index number
+            val foundNote = findNote(indexToUpdate)
+
+            //if the note exists, use the note details passed as parameters to update the found note in the ArrayList.
+            if ((foundNote != null) && (note != null)) {
+                foundNote.noteTitle = note.noteTitle
+                foundNote.notePriority = note.notePriority
+                foundNote.noteCategory = note.noteCategory
+                return true
+            }
+
+            //if the note was not found, return false, indicating that the update was not successful
+            return false
+        }
+
+    fun isValidIndex(Index: Int): Boolean {
+        return isValidListIndex(Index, notes);
+    }
+
+
 }
+
+
+
 
 
 
