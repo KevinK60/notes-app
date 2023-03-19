@@ -2,6 +2,7 @@ package controllers
 
 import models.Note
 import persistence.Serializer
+import java.util.stream.Stream
 
 
 class NoteAPI(serializerType: Serializer) {
@@ -145,16 +146,12 @@ class NoteAPI(serializerType: Serializer) {
         }
     }
 
-    private fun numberOfNotesByCategory(category: String): String {
-        //helper method to determine how many notes there are of a specific category
-        var counter = 0
-        for (note in notes) {
-            if (note.noteCategory == category) {
-                counter++
-            }
-        }
-        return counter.toString()
-    }
+     fun numberOfNotesByCategory(category: String): Int {
+         return notes.stream()
+             .filter { note: Note -> note.noteCategory == category }
+                .count()
+                .toInt()
+             }
 
 
     fun deleteNote(indexToDelete: Int): Note? {
@@ -192,14 +189,12 @@ class NoteAPI(serializerType: Serializer) {
         return isValidListIndex(Index, notes);
     }
 
-    companion object {
-        fun listArchivedNotes() {
 
-        }
+
     }
 
 
-}
+
 
 
 
