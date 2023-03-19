@@ -31,6 +31,10 @@ class NoteAPI(serializerType: Serializer) {
             notes[index]
         } else null
     }
+    fun searchByTitle(searchString : String) =
+        notes.filter { note -> note.noteTitle.contains(searchString, ignoreCase = true)}
+            .joinToString (separator = "\n") {
+                    note ->  notes.indexOf(note).toString() + ": " + note.toString() }
 
     //utility method to determine if an index is valid in a list.
     fun isValidListIndex(index: Int, list: List<Any>): Boolean {
@@ -56,12 +60,8 @@ class NoteAPI(serializerType: Serializer) {
     }
 
 
-    fun numberOfArchivedNotes(): Int {
-        return notes.stream()
-            .filter { note: Note -> note.isNoteArchived }
-            .count()
-            .toInt()
-    }
+    fun numberOfArchivedNotes(): Int = notes.count { note: Note -> note.isNoteArchived }
+
 
     fun listArchivedNotes(): String =
         if (numberOfArchivedNotes() == 0 || notes.isEmpty()) "No archived notes stored"

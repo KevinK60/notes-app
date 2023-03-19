@@ -34,8 +34,10 @@ fun mainMenu() : Int {
          > |   2) List all notes            |
          > |   3) Update a note             |
          > |   4) Delete a note             |
-         > |   20) Save                      |
-         > |   21) Load                      |
+         > |   5) Search notes              |
+         > |   6) List notes by category    |                                                                                                                                                   
+         > |   20) Save                     |
+         > |   21) Load                     2|
          > ----------------------------------
          > |   0) Exit                      |
          > ----------------------------------
@@ -49,6 +51,8 @@ fun runMenu() {
             2  -> listnotes()
             3  -> updateNote()
             4  -> deleteNote()
+            5  -> searchNotes()
+            6  -> listNotesBySelectedCategory()
             0  -> exitApp()
             20 -> save()
             21 -> load()
@@ -56,6 +60,16 @@ fun runMenu() {
         }
     } while (true)
 }
+fun searchNotes() {
+    val searchTitle = readNextLine("Enter the description to search by: ")
+    val searchResults = noteAPI.searchByTitle(searchTitle)
+    if (searchResults.isEmpty()) {
+        println("No notes found")
+    } else {
+        println(searchResults)
+    }
+}
+
 fun addNote(){
 
     val noteTitle = readNextLine("Enter a title for the note: ")
