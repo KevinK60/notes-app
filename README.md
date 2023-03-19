@@ -1,10 +1,23 @@
-**Note Keeper App**
-This is a Kotlin program that implements a command-line interface for a note-keeping application. The program allows the user to add, list, update, and delete notes. The notes are stored using different data formats, such as XML, JSON, and YAML.
+<h1>Note Keeper App</h1>
+Note Keeper App is a console application that allows users to manage their notes. The app provides various options for adding, listing, updating, deleting, searching, and categorizing notes. Users can also archive notes, sort notes by creation date, and save and load notes to and from a file.
 
-Overall, the NoteAPI class provides an interface for managing a collection of notes and persisting them to a data store.
+<H5>Note Menu</h5>
+The following is the list of options available in the Note Menu:
 
-This is a YAML serializer class that implements the Serializer interface. It writes and reads ArrayList<Note> objects to/from a file using the SnakeYAML library.
-  
-you can list archived notes<br />
-you can list active notes <br />
-user can search by the notes value of Priority<br />
+Add a note
+List all notes
+Update a note
+Delete a note
+Search notes
+List notes by category
+Archive a note
+Sort by created date
+Save
+Load
+Exit
+<h5>How to use</h5>
+Clone or download the repository to your local machine.
+https://github.com/KevinK60/notes-app.git
+Open the project in your preferred IDE.
+Run the Main.kt file to start the application.
+Use the number keys to select the desired option from the Note Menu.
