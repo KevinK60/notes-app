@@ -36,7 +36,8 @@ fun mainMenu() : Int {
          > ┃  4) Delete a note              ┃
          > ┃   5) Search notes              ┃
          > ┃   6) List notes by category    ┃   
-         > ┃   7) Archive a note            ┃                                                                                                                                              
+         > ┃   7) Archive a note            ┃ 
+         >     8) Sort by created date      ┃                                                                                                                                        
          > ┃   20) Save                     ┃
          > ┃   21) Load                     ┃
          > ┃﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ┃
@@ -55,6 +56,7 @@ fun runMenu() {
             5  -> searchNotes()
             6  -> listNotesBySelectedCategory()
             7  -> archiveNote()
+            8  -> sortByNoteDate()
             0  -> exitApp()
             20 -> save()
             21 -> load()
@@ -62,6 +64,11 @@ fun runMenu() {
         }
     } while (true)
 }
+
+fun sortByNoteDate() {
+    print(noteAPI.sortbydates())
+}
+
 fun searchNotes() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
