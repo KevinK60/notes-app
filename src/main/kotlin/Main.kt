@@ -26,21 +26,23 @@ fun main(args: Array<String>) {
 }
 fun mainMenu() : Int {
     return readNextInt(""" 
-         > ----------------------------------
-         > |        NOTE KEEPER APP         |
-         > ----------------------------------
-         > | NOTE MENU                      |
-         > |   1) Add a note                |
-         > |   2) List all notes            |
-         > |   3) Update a note             |
-         > |   4) Delete a note             |
-         > |   5) Search notes              |
-         > |   6) List notes by category    |                                                                                                                                                   
-         > |   20) Save                     |
-         > |   21) Load                     2|
-         > ----------------------------------
-         > |   0) Exit                      |
-         > ----------------------------------
+         > ┃﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ┃
+         > ┃        NOTE KEEPER APP         ┃
+         > ┃﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ┃
+         > ┃ NOTE MENU                      ┃
+         > ┃  1) Add a note                 ┃
+         > ┃   2) List all notes            ┃
+         > ┃   3) Update a note             ┃
+         > ┃  4) Delete a note              ┃
+         > ┃   5) Search notes              ┃
+         > ┃   6) List notes by category    ┃   
+         > ┃   7) Archive a note            ┃ 
+         >     8) Sort by created date      ┃                                                                                                                                        
+         > ┃   20) Save                     ┃
+         > ┃   21) Load                     ┃
+         > ┃﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ┃
+         > ┃   0) Exit                      ┃
+         > ┃﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏﹏ ┃
          > ==>> """.trimMargin(">"))
 }
 fun runMenu() {
@@ -53,6 +55,8 @@ fun runMenu() {
             4  -> deleteNote()
             5  -> searchNotes()
             6  -> listNotesBySelectedCategory()
+            7  -> archiveNote()
+            8  -> sortByNoteDate()
             0  -> exitApp()
             20 -> save()
             21 -> load()
@@ -60,6 +64,11 @@ fun runMenu() {
         }
     } while (true)
 }
+
+fun sortByNoteDate() {
+    print(noteAPI.sortbydates())
+}
+
 fun searchNotes() {
     val searchTitle = readNextLine("Enter the description to search by: ")
     val searchResults = noteAPI.searchByTitle(searchTitle)
@@ -75,7 +84,18 @@ fun addNote(){
     val noteTitle = readNextLine("Enter a title for the note: ")
     val notePriority = readNextInt("Enter a priority (1-low, 2, 3, 4, 5-high): ")
     val noteCategory = readNextLine("Enter a category for the note: ")
-    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false))
+    var duedate: Date = Date()
+    val addDate = readNextLine("Would you like add a custom add date to the note? (yes/no): ")
+    if (addDate.equals("yes")) {
+
+        val year = readNextInt("Please enter a year for the note: ")
+        val month = readNextInt("Please enter a month for the note: ")
+        val day = readNextInt("Please enter a day for the note: ")
+        duedate = Date(year, month, day)
+
+    }
+
+    val isAdded = noteAPI.add(Note(noteTitle, notePriority, noteCategory, false, duedate))
 
     if (isAdded) {
         println("Added Successfully")
@@ -161,6 +181,19 @@ fun deleteNote(){
             println("Delete Successful! Deleted note: ${noteToDelete.noteTitle}")
         } else {
             println("Delete NOT Successful")
+        }
+    }
+}
+fun archiveNote() {
+    listActiveNotes()
+    if (noteAPI.numberOfActiveNotes() > 0) {
+        // only ask the user to choose the note to archive if active notes exist
+        val indexToArchive = readNextInt("Enter the index of the note to archive: ")
+        // pass the index of the note to NoteAPI for archiving and check for success.
+        if (noteAPI.archiveNote(indexToArchive)) {
+            println("Archive Successful!")
+        } else {
+            println("Archive NOT Successful")
         }
     }
 }
