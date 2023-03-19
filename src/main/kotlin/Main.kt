@@ -84,6 +84,7 @@ fun listnotes(){
             1 -> listNotes();
             2 -> listActiveNotes();
             3 -> listArchivedNotes();
+            4 -> listNotesBySelectedCategory()
             else -> println("Invalid option entered: " + option);
         }
     } else {
@@ -91,8 +92,10 @@ fun listnotes(){
     }
 }
 
-
-
+fun listNotesBySelectedCategory() {
+    val category = readNextLine("Enter a category to filter by: ")
+    println(noteAPI.listNotesBySelectedCategory(category))
+}
 
 
 fun listActiveNotes() {

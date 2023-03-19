@@ -120,16 +120,17 @@ class NoteAPITest {
                 emptyNotes!!.listActiveNotes().lowercase().contains("no active notes")
             )
         }
-@Test
-fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
-    assertEquals(4, populatedNotes!!.numberOfActiveNotes())
-    val activeNotesString = populatedNotes!!.listActiveNotes().lowercase()
-    assertTrue(activeNotesString.contains("learning kotlin"))
-    assertFalse(activeNotesString.contains("code app"))
-    assertTrue(activeNotesString.contains("summer holiday"))
-    assertTrue(activeNotesString.contains("test app"))
-    assertTrue(activeNotesString.contains("swim"))
-}
+
+        @Test
+        fun `listActiveNotes returns active notes when ArrayList has active notes stored`() {
+            assertEquals(4, populatedNotes!!.numberOfActiveNotes())
+            val activeNotesString = populatedNotes!!.listActiveNotes().lowercase()
+            assertTrue(activeNotesString.contains("learning kotlin"))
+            assertFalse(activeNotesString.contains("code app"))
+            assertTrue(activeNotesString.contains("summer holiday"))
+            assertTrue(activeNotesString.contains("test app"))
+            assertTrue(activeNotesString.contains("swim"))
+        }
 
         @Test
         fun `listArchivedNotes returns no archived notes when ArrayList is empty`() {
@@ -138,7 +139,8 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
                 emptyNotes!!.listArchivedNotes().lowercase().contains("no archived notes")
             )
         }
-@Test
+
+        @Test
         fun `listArchivedNotes returns archived notes when ArrayList has archived notes stored`() {
             assertEquals(1, populatedNotes!!.numberOfArchivedNotes())
             val archivedNotesString = populatedNotes!!.listArchivedNotes().lowercase()
@@ -148,10 +150,12 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
             assertFalse(archivedNotesString.contains("test app"))
             assertFalse(archivedNotesString.contains("swim"))
         }
+
         @Test
         fun `listNotesBySelectedPriority returns No Notes when ArrayList is empty`() {
             assertEquals(0, emptyNotes!!.numberOfNotes())
-            assertTrue(emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
+            assertTrue(
+                emptyNotes!!.listNotesBySelectedPriority(1).lowercase().contains("no notes")
             )
         }
 
@@ -189,6 +193,7 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
         }
 
     }
+
     @Nested
     inner class DeleteNotes {
 
@@ -208,10 +213,11 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
             assertEquals(3, populatedNotes!!.numberOfNotes())
         }
     }
+
     @Nested
     inner class UpdateNotes {
         @Test
-        fun `updating a note that does not exist returns false`(){
+        fun `updating a note that does not exist returns false`() {
             assertFalse(populatedNotes!!.updateNote(6, Note("Updating Note", 2, "Work", false)))
             assertFalse(populatedNotes!!.updateNote(-1, Note("Updating Note", 2, "Work", false)))
             assertFalse(emptyNotes!!.updateNote(0, Note("Updating Note", 2, "Work", false)))
@@ -274,6 +280,7 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
             assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
         }
     }
+
     @Test
     fun `saving and loading an empty collection in JSON doesn't crash app`() {
         // Saving an empty notes.json file.
@@ -349,4 +356,53 @@ fun `listActiveNotes returns active notes when ArrayList has active notes stored
         assertEquals(storingNotes.findNote(1), loadedNotes.findNote(1))
         assertEquals(storingNotes.findNote(2), loadedNotes.findNote(2))
     }
+
+    @Nested
+    inner class CountingMethods {
+
+        @Test
+        fun numberOfNotesCalculatedCorrectly() {
+            assertEquals(5, populatedNotes!!.numberOfNotes())
+            assertEquals(0, emptyNotes!!.numberOfNotes())
+        }
+
+        @Test
+        fun numberOfArchivedNotesCalculatedCorrectly() {
+            assertEquals(1, populatedNotes!!.numberOfArchivedNotes())
+            assertEquals(0, emptyNotes!!.numberOfArchivedNotes())
+        }
+
+        @Test
+        fun numberOfActiveNotesCalculatedCorrectly() {
+            assertEquals(4, populatedNotes!!.numberOfActiveNotes())
+            assertEquals(0, emptyNotes!!.numberOfActiveNotes())
+        }
+
+        @Test
+        fun numberOfNotesByPriorityCalculatedCorrectly() {
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(1))
+            assertEquals(0, populatedNotes!!.numberOfNotesByPriority(2))
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(3))
+            assertEquals(2, populatedNotes!!.numberOfNotesByPriority(4))
+            assertEquals(1, populatedNotes!!.numberOfNotesByPriority(5))
+            assertEquals(0, emptyNotes!!.numberOfNotesByPriority(1))
+        }
+    }
+@Test
+    fun numberofbycategory() {
+    assertEquals(2, populatedNotes!!.numberOfNotesByCategory("Work"))
+    assertEquals(0, emptyNotes!!.numberOfNotes())
 }
+@Test
+fun numberOfNotesByCategory()
+{
+    assertEquals(2, populatedNotes!!.numberOfNotesByCategory("Work"))
+    assertEquals(0, emptyNotes!!.numberOfNotesByCategory("Work"))
+    assertEquals(0, populatedNotes!!.numberOfNotesByCategory("School"))
+    assertEquals(0, emptyNotes!!.numberOfNotesByCategory("School"))
+
+}
+
+
+    }
+
