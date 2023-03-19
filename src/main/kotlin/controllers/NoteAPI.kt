@@ -42,14 +42,10 @@ class NoteAPI(serializerType: Serializer) {
     }
 
     fun numberOfActiveNotes(): Int {
-
-        var counter = 0
-        for (note in notes) {
-            if (!note.isNoteArchived) {
-                counter++
-            }
-        }
-        return counter
+        return notes.stream()
+            .filter{note: Note -> !note.isNoteArchived}
+            .count()
+            .toInt()
     }
 
     fun archiveNote(indexToArchive: Int): Boolean {
@@ -63,17 +59,13 @@ class NoteAPI(serializerType: Serializer) {
         return false
     }
 
-    // Archived Notes
-    fun numberOfArchivedNotes(): Int {
-        var counter = 0
-        for (note in notes) {
-            if (note.isNoteArchived) {
-                counter++
-            }
-        }
-        return counter
-    }
 
+    fun numberOfArchivedNotes(): Int {
+        return notes.stream()
+            .filter{note: Note -> note.isNoteArchived}
+            .count()
+            .toInt()
+    }
     fun listActiveNotes(): String {
         return if (numberOfActiveNotes() == 0) {
             "No active notes stored"
@@ -133,6 +125,37 @@ class NoteAPI(serializerType: Serializer) {
             }
         }
     }
+    fun listNotesBySelectedCategory(category: String): String {
+        return if (notes.isEmpty()) {
+            "No notes stored"
+        } else {
+            var listOfNotes = ""
+            for (i in notes.indices) {
+                if (notes[i].noteCategory == category) {
+                    listOfNotes +=
+                        """$i: ${notes[i]}
+                        """.trimIndent()
+                }
+            }
+            if (listOfNotes.equals("")) {
+                "No notes with category: $category"
+            } else {
+                "${numberOfNotesByCategory(category)} notes with category $category: $listOfNotes"
+            }
+        }
+    }
+
+    private fun numberOfNotesByCategory(category: String): String {
+        //helper method to determine how many notes there are of a specific category
+        var counter = 0
+        for (note in notes) {
+            if (note.noteCategory == category) {
+                counter++
+            }
+        }
+        return counter.toString()
+    }
+
 
     fun deleteNote(indexToDelete: Int): Note? {
         return if (isValidListIndex(indexToDelete, notes)) {
